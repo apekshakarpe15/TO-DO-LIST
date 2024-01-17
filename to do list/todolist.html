@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>To-Do List</h1>
+    <input type="text" id="taskInput" placeholder="Add new task">
+    
+    <!-- Add task importance dropdown -->
+    <select id="taskImportance">
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+    </select>
+    
+    <button onclick="addTask()">Add</button>
+    <ul id="taskList"></ul>
+</div>
+
+<script>
+    function addTask() {
+        let input = document.getElementById("taskInput");
+        let importance = document.getElementById("taskImportance").value;
+        let ul = document.getElementById("taskList");
+        let li = document.createElement("li");
+        
+        let checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.addEventListener("change", function() {
+            toggleTaskCompletion(li, checkbox);
+        });
+
+        let deleteBtn = document.createElement("button");
+        deleteBtn.innerText = "X";
+        deleteBtn.className = "delete-btn";
+        deleteBtn.addEventListener("click", function() {
+            deleteTask(li);
+        });
+
+        if (input.value !== "") {
+            li.appendChild(checkbox);
+            li.appendChild(document.createTextNode(input.value + " (Importance: " + importance + ")"));
+            li.appendChild(deleteBtn);
+            ul.appendChild(li);
+            input.value = "";
+        }
+    }
+
+    function toggleTaskCompletion(li, checkbox) {
+        if (checkbox.checked) {
+            li.classList.add("completed");
+        } else {
+            li.classList.remove("completed");
+        }
+    }
+
+    function deleteTask(li) {
+        li.remove();
+    }
+</script>
+</body>
+</html>
